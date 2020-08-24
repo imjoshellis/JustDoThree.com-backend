@@ -1,7 +1,6 @@
 class CreateBlocks < ActiveRecord::Migration[6.0]
   def change
-    create_table :blocks do |t|
-      t.string :uuid
+    create_table :blocks, id: :uuid do |t|
       t.string :title
       t.string :type
       t.string :block_list

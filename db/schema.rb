@@ -13,10 +13,10 @@
 ActiveRecord::Schema.define(version: 2020_08_24_143725) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "blocks", force: :cascade do |t|
-    t.string "uuid"
+  create_table "blocks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "type"
     t.string "block_list"
@@ -27,13 +27,11 @@ ActiveRecord::Schema.define(version: 2020_08_24_143725) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "tasks", force: :cascade do |t|
-    t.string "uuid"
+  create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.boolean "completed"
     t.string "dueDate"
-    t.string "block_uuid"
-    t.integer "block_id"
+    t.string "block_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
