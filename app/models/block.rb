@@ -21,4 +21,22 @@ class Block < ApplicationRecord
     b
   end
 
+  def make_quarters
+    block_list = ""
+    4.times do |i|
+      title = "Q" + (i + 1).to_s
+      q_start = Date.new(start_date.year, i * 3 + 1, 1)
+      b = Block.new(title: title, start_date: q_start, end_date: q_start.end_of_quarter)
+      b.quarter!
+      b.make_months
+
+      block_list += if i === 0
+        b.id
+      else
+        "," + b.id
+      end
+      update(block_list: block_list)
+    end
+  end
+
 end
