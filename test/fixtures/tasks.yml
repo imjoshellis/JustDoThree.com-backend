@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uuid: MyString
+  title: MyString
+  completed: false
+  dueDate: MyString
+  block_uuid: MyString
+
+two:
+  uuid: MyString
+  title: MyString
+  completed: false
+  dueDate: MyString
+  block_uuid: MyString

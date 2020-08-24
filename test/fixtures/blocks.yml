@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uuid: MyString
+  title: MyString
+  type: 
+  block_list: MyString
+  task_list: MyString
+  start_date: 2020-08-24
+  end_date: 2020-08-24
+
+two:
+  uuid: MyString
+  title: MyString
+  type: 
+  block_list: MyString
+  task_list: MyString
+  start_date: 2020-08-24
+  end_date: 2020-08-24
