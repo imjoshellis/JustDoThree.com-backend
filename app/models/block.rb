@@ -1,3 +1,3 @@
 class Block < ApplicationRecord
-  has_many :tasks, :dependent => :destroy
+  has_many :tasks, dependent: :destroy
 end
