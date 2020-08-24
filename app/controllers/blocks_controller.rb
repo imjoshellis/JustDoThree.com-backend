@@ -6,7 +6,7 @@ class BlocksController < ApplicationController
   end
 
   def update
-    block = Block.find_by(id: params[:id])
+    block = Block.find(params[:id])
     block.update(task_list: params[:task_list])
 
     render json: BlockSerializer.new(block).to_serialized_json
