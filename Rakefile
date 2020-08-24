@@ -3,4 +3,8 @@
 
 require_relative "config/application"
 
+task "rf" => :environment do
+  system "standardrb --fix"
+end
+
 Rails.application.load_tasks
