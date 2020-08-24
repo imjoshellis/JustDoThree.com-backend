@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   def create
     block = Block.find_by(block_id: params[:block_id])
     task = Task.create(title: params[:title], completed: false, dueDate: params[:dueDate], block_id: params[:block_id])
-    block.task_list = block.task_list + ',' task.id
+    block.task_list = block.task_list + "," + task.id
     render json: TaskSerializer.new(task).to_serialized_json
   end
 
