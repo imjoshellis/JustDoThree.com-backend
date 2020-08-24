@@ -5,6 +5,57 @@ class Block < ApplicationRecord
   validates :kind, presence: true
   validates :start_date, presence: true
   validates :end_date, presence: true
+
+  def self.current_blocks
+    # initialize blocks array
+    blocks = []
+
+    # get current date
+    today = Date.today
+
+    # try to find life block
+    life_block = Block.find_by(kind: 0)
+
+    # if it doesn't exist, make it
+    unless life_block
+      life_block = Block.new(title: "Life")
+      life_block.life!
+    end
+
+    # push into blocks array
+    blocks << life_block
+
+    # try to find the year
+    year_block = Block.where(kind: "year").find_by(start_date: today.beginning_of_year)
+
+    # if it doesn't exist, generate the year
+    year_block ||= Block.generate(today.year)
+
+    # push into blocks array
+    blocks << year_block
+
+    # find and add quarter
+    blocks << Block.where(kind: "quarter").find_by(start_date: today.beginning_of_quarter)
+
+    # find and add month
+    blocks << Block.where(kind: "month").find_by(start_date: today.beginning_of_month)
+
+    # find and add next 10 days
+    10.times do |i|
+      day_block = Block.where(kind: "day").find_by(start_date: today + i)
+
+      # if day doesn't exist, generate next year
+      unless day_block
+        Block.generate(today.year + 1)
+        day_block = Block.where(kind: "day").find_by(start_date: today + i)
+      end
+
+      blocks << day_block
+    end
+
+    blocks
+  end
+
   def self.generate(year)
     title = "Y" + year.to_s
     b = Block.new(title: title, start_date: Date.new(year, 1, 1), end_date: Date.new(year, 12, 31))
