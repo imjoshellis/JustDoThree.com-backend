@@ -1,26 +1,10 @@
 class TasksController < ApplicationController
   def index
-    tasks = []
-    blocks = Block.current_blocks
-    blocks.each do |b|
-      b.tasks.each do |t|
-        tasks << t
-      end
-    end
-
-    render json: TaskSerializer.new(tasks).serialized_json
+    render json: TaskSerializer.new(Task.current_tasks).serialized_json
   end
 
   def overdue
-    tasks = []
-
-    Block.where("end_date < ?", Date.today).each do |b|
-      b.tasks.each do |t|
-        tasks << t if t.completed === false
-      end
-    end
-
-    render json: TaskSerializer.new(tasks).serialized_json
+    render json: TaskSerializer.new(Task.overdue).serialized_json
   end
 
   def create
