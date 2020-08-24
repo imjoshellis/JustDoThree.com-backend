@@ -57,4 +57,21 @@ class Block < ApplicationRecord
     save
   end
 
+  def make_days
+    block_list = ""
+    start_date.end_of_month.day.times do |i|
+      d_start = Date.new(start_date.year, start_date.month, i + 1)
+      title = d_start.strftime("%b %-d (%a)")
+      b = Block.new(title: title, start_date: d_start, end_date: d_start)
+      b.day!
+
+      block_list += if i === 0
+        b.id
+      else
+        "," + b.id
+      end
+
+    end
+    save
+  end
 end
