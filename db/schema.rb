@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_08_24_143725) do
 
   create_table "blocks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
-    t.string "type"
+    t.integer "kind"
     t.string "block_list"
     t.string "task_list"
     t.date "start_date"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2020_08_24_143725) do
 
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
-    t.boolean "completed"
+    t.boolean "completed", default: false
     t.string "dueDate"
     t.string "block_id"
     t.datetime "created_at", precision: 6, null: false
