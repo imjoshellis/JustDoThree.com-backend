@@ -3,8 +3,6 @@ class Block < ApplicationRecord
   has_many :tasks, dependent: :destroy
   validates :title, presence: true
   validates :kind, presence: true
-  validates :start_date, presence: true
-  validates :end_date, presence: true
 
   def self.current_blocks
     # initialize blocks array
