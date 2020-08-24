@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "/tasks/overdue/", to: "tasks#overdue"
+
   resources :blocks
   resources :tasks
 

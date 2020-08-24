@@ -9,6 +9,15 @@ class TasksController < ApplicationController
     end
 
     render json: TaskSerializer.new(tasks).to_serialized_json
+
+  def overdue
+    tasks = []
+
+    Block.where("end_date < ?", Date.today).each do |b|
+      b.tasks.each do |t|
+        tasks << t if t.completed === false
+      end
+    end
   end
 
   def create
