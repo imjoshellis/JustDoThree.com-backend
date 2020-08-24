@@ -1,4 +1,16 @@
 class TasksController < ApplicationController
+  def index
+    tasks = []
+    blocks = Block.current_blocks
+    blocks.each do |b|
+      b.tasks.each do |t|
+        tasks << t
+      end
+    end
+
+    render json: TaskSerializer.new(tasks).to_serialized_json
+  end
+
   def create
     block = Block.find_by(block_id: params[:block_id])
     task = Task.create(title: params[:title], completed: false, dueDate: params[:dueDate], block_id: params[:block_id])
