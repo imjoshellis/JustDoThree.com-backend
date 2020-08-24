@@ -1,6 +1,6 @@
 class BlocksController < ApplicationController
   def index
-    blocks = Block.all
+    blocks = Block.current_blocks
     render json: BlockSerializer.new(blocks).to_serialized_json
   end
 
