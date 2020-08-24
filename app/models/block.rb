@@ -120,6 +120,7 @@ class Block < ApplicationRecord
         "," + b.id
       end
 
+      Task.create(title: title, block_id: b.id)
     end
     save
   end
