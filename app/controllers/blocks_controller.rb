@@ -1,8 +1,6 @@
 class BlocksController < ApplicationController
   def index
-    blocks = Block.current_blocks
-
-    render json: BlockSerializer.new(blocks).serialized_json
+    render json: BlockSerializer.new(Block.current_blocks).serialized_json
   end
 
   def update
