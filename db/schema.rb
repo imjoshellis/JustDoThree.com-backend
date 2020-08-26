@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2020_08_24_143725) do
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.boolean "completed", default: false
-    t.string "dueDate"
+    t.string "due_date"
     t.string "block_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

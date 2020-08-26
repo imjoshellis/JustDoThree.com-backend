@@ -3,7 +3,7 @@ class CreateTasks < ActiveRecord::Migration[6.0]
     create_table :tasks, id: :uuid do |t|
       t.string :title
       t.boolean :completed, default: false
-      t.string :dueDate
+      t.string :due_date
       t.string :block_id
 
       t.timestamps
