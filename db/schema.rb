@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(version: 2020_08_24_143725) do
   create_table "blocks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.integer "kind"
-    t.string "block_list"
-    t.string "task_list"
+    t.string "block_list", default: ""
+    t.string "task_list", default: ""
     t.date "start_date"
     t.date "end_date"
     t.datetime "created_at", precision: 6, null: false
