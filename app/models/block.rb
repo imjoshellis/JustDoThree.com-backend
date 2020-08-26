@@ -37,13 +37,13 @@ class Block < ApplicationRecord
     blocks << year2_block
 
     # find and add quarter
-    Block.where(kind: "quarter").each { |b| blocks << b }
+    Block.where(kind: "quarter").where("start_date > ?", today).each { |b| blocks << b }
 
     # find and add month
-    Block.where(kind: "month").each { |b| blocks << b }
+    Block.where(kind: "month").where("start_date > ?", today).each { |b| blocks << b }
 
     # find and add days
-    Block.where(kind: "day").each { |b| blocks << b }
+    Block.where(kind: "day").where("start_date > ?", today).each { |b| blocks << b }
 
     blocks
   end
