@@ -61,7 +61,7 @@ class Block < ApplicationRecord
     b.make_quarters
     life_block = Block.find_by(kind: 0)
     life_list = life_block.block_list
-    if life_list
+    if life_list.length > 0
       life_list += "," + b.id
     else
       life_list = b.id
@@ -84,6 +84,7 @@ class Block < ApplicationRecord
       else
         "," + b.id
       end
+
       update(block_list: block_list)
     end
   end
@@ -102,6 +103,8 @@ class Block < ApplicationRecord
       else
         "," + b.id
       end
+
+      update(block_list: block_list)
     end
     save
   end
@@ -114,13 +117,18 @@ class Block < ApplicationRecord
       b = Block.new(title: title, start_date: d_start, end_date: d_start)
       b.day!
 
+      if d_start > Date.today
+        t = Task.create(title: title, block_id: b.id)
+        b.update(task_list: t.id)
+      end
+
       block_list += if i === 0
         b.id
       else
         "," + b.id
       end
 
-      Task.create(title: title, block_id: b.id)
+      update(block_list: block_list)
     end
     save
   end
