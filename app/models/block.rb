@@ -25,31 +25,25 @@ class Block < ApplicationRecord
 
     # try to find the year
     year_block = Block.where(kind: "year").find_by(start_date: today.beginning_of_year)
-
-    # if it doesn't exist, generate the year
     year_block ||= Block.generate(today.year)
-
-    # push into blocks array
     blocks << year_block
 
+    year1_block = Block.where(kind: "year").find_by(start_date: today.advance(years: 1).beginning_of_year)
+    year1_block ||= Block.generate(today.year + 1)
+    blocks << year1_block
+
+    year2_block = Block.where(kind: "year").find_by(start_date: today.advance(years: 2).beginning_of_year)
+    year2_block ||= Block.generate(today.year + 2)
+    blocks << year2_block
+
     # find and add quarter
-    blocks << Block.where(kind: "quarter").find_by(start_date: today.beginning_of_quarter)
+    Block.where(kind: "quarter").each { |b| blocks << b }
 
     # find and add month
-    blocks << Block.where(kind: "month").find_by(start_date: today.beginning_of_month)
+    Block.where(kind: "month").each { |b| blocks << b }
 
-    # find and add next 10 days
-    10.times do |i|
-      day_block = Block.where(kind: "day").find_by(start_date: today + i)
-
-      # if day doesn't exist, generate next year
-      unless day_block
-        Block.generate(today.year + 1)
-        day_block = Block.where(kind: "day").find_by(start_date: today + i)
-      end
-
-      blocks << day_block
-    end
+    # find and add days
+    Block.where(kind: "day").each { |b| blocks << b }
 
     blocks
   end
@@ -116,11 +110,6 @@ class Block < ApplicationRecord
       title = d_start.strftime("%b %-d (%a)")
       b = Block.new(title: title, start_date: d_start, end_date: d_start)
       b.day!
-
-      if d_start > Date.today
-        t = Task.create(title: title, block_id: b.id)
-        b.update(task_list: t.id)
-      end
 
       block_list += if i === 0
         b.id
