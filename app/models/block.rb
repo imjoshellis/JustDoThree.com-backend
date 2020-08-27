@@ -48,6 +48,17 @@ class Block < ApplicationRecord
     blocks
   end
 
+  def self.cleanup
+    Block.all.each do |b|
+      task_list_array = b.task_list.split(",")
+      if b.tasks.size != task_list_array.size
+        # cycle through to find matches
+        new_task_list = b.tasks.map { |t| t.id }.join(",")
+        b.update(task_list: new_task_list)
+      end
+    end
+  end
+
   def self.generate(year)
     title = "Y" + year.to_s
     b = Block.new(title: title, start_date: Date.new(year, 1, 1), end_date: Date.new(year, 12, 31))
